@@ -38,29 +38,142 @@
     
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    let fifteen = inventors.filter(function(inventor) {
+      if (inventor.year >= 1500 && inventor.year <= 1599) {
+        return true;
+      } else {
+        return false;
+      }
+    })
+    //Shorter alternative
+    fifteen2 = inventors.filter(inventor => (inventor.year >= 1500 && inventor.year <= 1599));
+    //Console log
+    console.table(fifteen);
+    console.table(fifteen2);
+    console.log(fifteen == fifteen2);
+    console.log(JSON.stringify(fifteen) == JSON.stringify(fifteen2));
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    let fullNames = inventors.map(function(inventor) {
+      return inventor.first + " " + inventor.last;
+    }) 
+    //Shorter alternative
+    fullNames2 = inventors.map(inventor => inventor.first + " " + inventor.last);
+    //Console log
+    console.table(fullNames);
+    console.table(fullNames2);
+    console.log(fullNames == fullNames2);
+    console.log(JSON.stringify(fullNames) == JSON.stringify(fullNames2));
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    let ordered = inventors.sort(function(firstPerson, secondPerson) {
+      if(firstPerson.year > secondPerson.year) {
+        return 1;
+      } else {
+        return -1;
+      }
+    })
+    //Shorter alternative
+    ordered2 = inventors.sort((a, b) => a.year>b.year ? 1 : -1);
+    //Console log
+    console.table(ordered);
+    console.table(ordered2);
+    console.log(ordered == ordered2);
+    console.log(JSON.stringify(ordered) == JSON.stringify(ordered2));
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    let totalYears = inventors.reduce(function(total, inventor) {
+      return total + (inventor.passed - inventor.year);
+    }, 0)
+    // Shorter alternative
+    let totalYears2 = inventors.reduce((total, inventor) => total + (inventor.passed - inventor.year), 0)
+    //Console log
+    console.table(totalYears);
+    console.table(totalYears2);
+    console.log(totalYears == totalYears2);
 
     // 5. Sort the inventors by years lived
+    let oldest = inventors.sort(function(lastGuy, nextGuy) {
+      const lastAge = lastGuy.passed - lastGuy.year;
+      const nextAge = nextGuy.passed - nextGuy.year;
+      if (lastAge > nextAge) {
+        return -1;
+      } else {
+        return 1;
+      }
+    })
+    //Shorter alternative
+    let oldest2 = inventors.sort((a,b) => {
+      const aAge = a.passed - a.year;
+      const bAge = b.passed - b.year;
+      return (aAge > bAge) ? -1 : 1;
+    });
+    //Console log
+    console.table(oldest);
+    console.table(oldest2);
+    console.log(oldest == oldest2);
+    console.log(JSON.stringify(oldest) == JSON.stringify(oldest2));
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
+    // This code only runs in the console
+    /*
+    let category = document.querySelector('.mw-category');
+    let links = Array.from(category.querySelectorAll('a'));
+    let de = links.map(link => link.textContent);
+    let deCount = de.reduce((count, streets) => count + 1, 0);
+    console.table(de);
+    console.log(deCount);
+    */
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    let alphaList = people.sort(function(lastPerson, nextPerson) {
+      const [lastSurname, lastFirstName] = lastPerson.split(", ");
+      const [nextSurname, nextFirstName] = nextPerson.split(", ");
+      if (lastSurname > nextSurname) {
+        return 1;
+      } else {
+        return -1;
+      }
+    })
+    //Shorter alternative
+    let alphaList2 = people.sort((a, b) => {
+      const[aLast, aFirst] = a.split(", ");
+      const[bLast, bFirst] = b.split(", ");
+      return (aLast > bLast) ? 1 : -1;
+    })
+    //Console log
+    console.table(alphaList);
+    console.table(alphaList2);
+    console.log(alphaList == alphaList2);
+    console.log(JSON.stringify(alphaList) == JSON.stringify(alphaList2));
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
 
+    let transportation = data.reduce(function(countObject, item) {
+      if (countObject[item] == undefined) {
+        countObject[item] = 0;
+      }
+      countObject[item]++;
+      return countObject;
+    },{});
+    //Shorter alternative
+    let transportation2 = data.reduce((obj, item) => {
+      if (!obj[item]) obj[item] = 0;
+      obj[item]++;
+      return obj;
+    },{})
+    //Console log
+    console.table(transportation);
+    console.table(transportation2);
+    console.log(transportation == transportation2);
+    console.log(JSON.stringify(transportation) == JSON.stringify(transportation2));
   </script>
 </body>
 </html>
